@@ -6,6 +6,14 @@ export default async function handler(req, res) {
   const { sessionId, name, email, cycleStory, recommendedModule, messages } = req.body;
   if (!sessionId || !name) return res.status(400).json({ error: 'Missing required fields' });
 
+  const properties = {
+    Name: { title: [{ text: { content: name } }] },
+    'Session ID': { rich_text: [{ text: { content: sessionId } }] },
+    ...(email && { Email: { email } }),
+    ...(cycleStory && { 'Cycle Story': { select: { name: cycleStory } } }),
+    ...(recommendedModule && { Module: { select: { name: recommendedModule } } }),
+  };
+
   try {
     // Check if a page already exists for this session
     const existing = await notion.databases.query({
@@ -13,31 +21,36 @@ export default async function handler(req, res) {
       filter: { property: 'Session ID', rich_text: { equals: sessionId } },
     });
 
-    const properties = {
-      Name: { title: [{ text: { content: name } }] },
-      'Session ID': { rich_text: [{ text: { content: sessionId } }] },
-      ...(email && { Email: { email } }),
-      ...(cycleStory && { 'Cycle Story': { select: { name: cycleStory } } }),
-      ...(recommendedModule && { Module: { select: { name: recommendedModule } } }),
-    };
-
-    const blocks = messagesToBlocks(messages || []);
+    let pageId;
 
     if (existing.results.length > 0) {
-      const pageId = existing.results[0].id;
+      pageId = existing.results[0].id;
       await notion.pages.update({ page_id: pageId, properties });
-      // Clear existing blocks and rewrite conversation
+    } else {
+      const page = await notion.pages.create({
+        parent: { database_id: DATABASE_ID },
+        properties,
+      });
+      pageId = page.id;
+    }
+
+    // Append conversation blocks separately so metadata always saves even if this fails
+    try {
+      const blocks = messagesToBlocks(messages || []);
+      // Remove existing blocks first
       const existingBlocks = await notion.blocks.children.list({ block_id: pageId });
       for (const block of existingBlocks.results) {
         await notion.blocks.delete({ block_id: block.id });
       }
-      await notion.blocks.children.append({ block_id: pageId, children: blocks });
-    } else {
-      await notion.pages.create({
-        parent: { database_id: DATABASE_ID },
-        properties,
-        children: blocks,
-      });
+      // Append in batches of 100 (Notion API limit)
+      for (let i = 0; i < blocks.length; i += 100) {
+        await notion.blocks.children.append({
+          block_id: pageId,
+          children: blocks.slice(i, i + 100),
+        });
+      }
+    } catch (blockError) {
+      console.error('Block append error (metadata saved):', blockError);
     }
 
     return res.json({ success: true });
