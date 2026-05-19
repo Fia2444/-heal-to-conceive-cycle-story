@@ -72,7 +72,7 @@ Wild Card → Restore It
 Perfect Paradox → Nourish It
 Latecomer → Restore It
 Spotter → MUST ask about tracking before recommending:
-  - If she IS tracking (any method) → Define It
+  - If she IS tracking (any method) → Restore It
   - If she is NOT tracking → Define It
 
 IMPORTANT: If it is unclear whether she is tracking, ask her directly before making a recommendation.
