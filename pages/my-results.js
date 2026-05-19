@@ -65,8 +65,8 @@ export default function MyResults() {
 
   if (status === 'not-found' || status === 'error') return (
     <div style={centeredStyle}>
-      <p style={{ color: '#9E8088', fontSize: '14px', textAlign: 'center' }}>No results found. Complete the quiz to see your Cycle Story.</p>
-      <a href="/" style={linkButtonStyle}>Take the quiz</a>
+      <p style={{ color: '#9E8088', fontSize: '14px', textAlign: 'center' }}>No results found. Discover your Cycle Story to see your results.</p>
+      <a href="/" style={linkButtonStyle}>Discover your Cycle Story</a>
     </div>
   );
 
@@ -140,7 +140,7 @@ export default function MyResults() {
         {/* Retake */}
         <div style={{ textAlign: 'center' }}>
           <a href="/" style={{ fontSize: '13px', color: '#AD0068', textDecoration: 'none', fontWeight: '500', borderBottom: '1px solid #AD0068', paddingBottom: '1px' }}>
-            Retake the quiz
+            Discover your Cycle Story again
           </a>
         </div>
       </div>
