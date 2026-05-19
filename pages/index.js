@@ -92,10 +92,15 @@ function TypingIndicator() {
 
 function NameInputScreen({ onSubmit }) {
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
   function handleSubmit(e) {
     e.preventDefault();
-    if (name.trim()) onSubmit(name.trim());
+    if (name.trim()) onSubmit(name.trim(), email.trim());
   }
+
+  const inputStyle = { width: '100%', padding: '14px 18px', borderRadius: '12px', border: '1.5px solid #E8D0D8', backgroundColor: '#FFFFFF', fontSize: '15px', color: '#2A2828', fontFamily: 'Poppins, sans-serif', outline: 'none', marginBottom: '12px', boxSizing: 'border-box' };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', maxWidth: '720px', margin: '0 auto', backgroundColor: '#F6F7F7', alignItems: 'center', justifyContent: 'center', padding: '32px 24px' }}>
       <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#FAE7EB', border: '2px solid #AD0068', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '28px' }}>
@@ -108,7 +113,7 @@ function NameInputScreen({ onSubmit }) {
         Discover Your Cycle Story
       </h1>
       <p style={{ fontSize: '14px', color: '#9E8088', marginBottom: '36px', textAlign: 'center', lineHeight: '1.6', maxWidth: '340px' }}>
-        Before we begin, what's your name?
+        Before we begin, tell us a little about you.
       </p>
       <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '360px' }}>
         <input
@@ -117,7 +122,14 @@ function NameInputScreen({ onSubmit }) {
           onChange={e => setName(e.target.value)}
           placeholder="Your first name"
           autoFocus
-          style={{ width: '100%', padding: '14px 18px', borderRadius: '12px', border: '1.5px solid #E8D0D8', backgroundColor: '#FFFFFF', fontSize: '15px', color: '#2A2828', fontFamily: 'Poppins, sans-serif', outline: 'none', marginBottom: '14px', boxSizing: 'border-box' }}
+          style={inputStyle}
+        />
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder="Your email address (optional)"
+          style={inputStyle}
         />
         <button
           type="submit"
@@ -181,9 +193,10 @@ export default function Home() {
     setPhase('chat');
   }
 
-  function handleNameSubmit(name) {
+  function handleNameSubmit(name, email) {
     localStorage.setItem('htc_user_name', name);
-    initChat(name, '');
+    if (email) localStorage.setItem('htc_user_email', email);
+    initChat(name, email || '');
   }
 
   async function saveSession(cycleStory, recommendedModule, allMessages) {
