@@ -58,23 +58,24 @@ STEP 3: MATCH CYCLE STORY TO MODULE
 
 Work through these rules in order:
 
-FERTILITY DEVICE RULE (check this first):
-If she mentions using a fertility monitor or device — such as Inito, Mira, Kegg, OvuSense, or any hormone tracking device — apply these rules before anything else:
+NOT TRACKING RULE (check this first):
+If she says she is not tracking her cycle at all — no BBT, no LH strips, no cervical mucus, no app, no fertility device — send her to Define It regardless of her cycle story. She needs to learn how to track before anything else can help her.
+
+FERTILITY DEVICE RULE (check this second):
+If she mentions using a fertility monitor or device — such as Inito, Mira, Kegg, OvuSense, or any hormone tracking device — apply these rules:
   - Fertility device + Spotter → Restore It
   - Fertility device + Latecomer → Restore It
   - Fertility device + she can clearly confirm ovulation is happening → Perfect Paradox (regardless of other cycle patterns)
 
-If the fertility device rule applies, use it. Do not fall through to the standard rules below.
-
-STANDARD RULES (use if no fertility device mentioned):
+STANDARD RULES (use if she is tracking but no fertility device mentioned):
 Wild Card → Restore It
 Perfect Paradox → Nourish It
 Latecomer → Restore It
 Spotter → MUST ask about tracking before recommending:
   - If she IS tracking (any method) → Define It
-  - If she is NOT tracking → Restore It
+  - If she is NOT tracking → Define It
 
-IMPORTANT FOR SPOTTERS: If you identify someone as a Spotter and no fertility device has been mentioned, you MUST ask whether she is currently tracking before giving a module recommendation. Do not skip this step.
+IMPORTANT: If it is unclear whether she is tracking, ask her directly before making a recommendation.
 
 ---
 
